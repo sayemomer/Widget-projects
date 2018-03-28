@@ -5,15 +5,36 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {currentCount: 25}
+    this.state = {
+      minute:25,
+      second:60
+    }
+  }
+
+
+  secondMeter(){
+    this.setState({ second : this.state.second - 1 });
+  }
+
+  minuteMeter(){
+    this.setState({ minute : this.state.minute - 1 });
+
+    if( this.state.minute === -1 ){
+      this.stopPomodoro();
+    }
+
+    this.setState({ second : 60 });
+
   }
 
   timer() {
-    this.setState({
-      currentCount: this.state.currentCount - 1
-    })
+    if( this.state.second === 0){
+      this.minuteMeter();
+    }
+    else{
+      this.secondMeter();
+    }
   }
-
 
   startPomodoro(event) {
      event.preventDefault();
@@ -27,17 +48,19 @@ class App extends Component {
 
   stopPomodoro(event){
     clearInterval(this.intervalId);
-    this.setState({ currentCount : 0 });
-
+    this.setState({
+      minute:25,
+      second:60
+      });
   }
 
   setTimeUpPomodoro(event){
-    this.setState({ currentCount : this.state.currentCount + 1});
+    this.setState({ minute: this.state.minute + 1});
 
   }
 
   setTimeDownPomodoro(event){
-    this.setState({ currentCount : this.state.currentCount - 1});
+    this.setState({ minute : this.state.minute - 1});
 
   }
 
@@ -66,7 +89,7 @@ class App extends Component {
 
                             <div className="content">
                               <i class="fas fa-plus" onClick={ this.setTimeUpPomodoro.bind(this)}></i>
-                              <p>({ this.state.currentCount })</p>
+                              <p>({ this.state.minute } : {this.state.second})</p>
                               <i class="fas fa-minus"onClick={ this.setTimeDownPomodoro.bind(this)}></i>
                             </div>
 
