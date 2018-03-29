@@ -1,13 +1,13 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" ;
 
 
-.App {
-  text-align: center;
+.card{
+  margin: 0 auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+
+.App {
+  text-align: center;
 }
 
 .App-header {
@@ -21,11 +21,8 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+.App-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5em;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}

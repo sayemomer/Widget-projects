@@ -7,7 +7,9 @@ class App extends Component {
     super(props);
     this.state = {
       minute:25,
-      second:60
+      second:60,
+      stage:"Pomodoro",
+      ability:true
     }
   }
 
@@ -35,33 +37,52 @@ class App extends Component {
       this.secondMeter();
     }
   }
+  
+  toogleVisibility(){
+    this.setState({ ability : !this.state.ability});
+  }
 
   startPomodoro(event) {
-     event.preventDefault();
+    event.preventDefault();
+    this.toogleVisibility();
     this.intervalId = setInterval(this.timer.bind(this), 1000);
   }
 
   pausePomodoro(event){
     event.preventDefault();
     clearInterval(this.intervalId);
+    this.toogleVisibility();
   }
 
   stopPomodoro(event){
     clearInterval(this.intervalId);
-    this.setState({
-      minute:25,
-      second:60
-      });
+    if( this.state.stage === "Pomodoro"){
+      this.setState({
+        minute:5,
+        second:60,
+        stage:"Break"});
+    }
+    else{
+      this.setState({
+        minute:25,
+        second:60,
+        stage:"Pomodoro"});
+      }
   }
 
-  setTimeUpPomodoro(event){
-    this.setState({ minute: this.state.minute + 1});
+ 
 
+  setTimeUpPomodoro(event){
+    if( this.state.minute < 25){
+      this.setState({ minute: this.state.minute + 1});
+      
+    }
   }
 
   setTimeDownPomodoro(event){
-    this.setState({ minute : this.state.minute - 1});
-
+    if(this.state.minute >0 ){
+      this.setState({ minute : this.state.minute - 1});
+    } 
   }
 
   
@@ -76,31 +97,25 @@ class App extends Component {
               <div className="card">
                           <header className="card-header">
                             <p className="card-header-title">
-                              Pomodoro
+                            <span> {this.state.stage}</span>
                             </p>
-                            <a  className="card-header-icon" aria-label="more options">
-                              <span className="icon">
-                                <i className="fas fa-angle-down" aria-hidden="true"></i>
-                              </span>
-                            </a>
+                          
                           </header>
 
                           <div className="card-content">
 
                             <div className="content">
                               <i class="fas fa-plus" onClick={ this.setTimeUpPomodoro.bind(this)}></i>
-                              <p>({ this.state.minute } : {this.state.second})</p>
+                              <p className="App-text">({ this.state.minute } : {this.state.second})</p>
                               <i class="fas fa-minus"onClick={ this.setTimeDownPomodoro.bind(this)}></i>
+                              
                             </div>
-
                           </div>
 
                           <footer className="card-footer">
-                            
-                            <a  className="card-footer-item" onClick={this.startPomodoro.bind(this)}>start</a>
-                            <a  className="card-footer-item"onClick={this.pausePomodoro.bind(this)}>Pause</a>
-                            <a  className="card-footer-item" onClick={this.stopPomodoro.bind(this)}>end</a>
-                            
+                             <a  className="card-footer-item is-dark button" onClick={this.startPomodoro.bind(this)} disabled={!this.state.ability} >Start</a> 
+                            <a  className="card-footer-item is-dark button"onClick={this.pausePomodoro.bind(this)}>Pause</a>
+                            <a  className="card-footer-item  is-dark button" onClick={this.stopPomodoro.bind(this)}>end</a>
                           </footer>
 
                         </div>
