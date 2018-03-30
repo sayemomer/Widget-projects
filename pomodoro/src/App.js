@@ -97,7 +97,7 @@ class App extends Component {
               <div className="card">
                           <header className="card-header">
                             <p className="card-header-title">
-                            <span> {this.state.stage}</span>
+                            <span > {this.state.stage}</span>
                             </p>
                           
                           </header>
@@ -106,7 +106,7 @@ class App extends Component {
 
                             <div className="content">
                               <i class="fas fa-plus" onClick={ this.setTimeUpPomodoro.bind(this)}></i>
-                              <p className="App-text">({ this.state.minute } : {this.state.second})</p>
+                              <p className="App-text">{ this.state.minute } : {this.state.second}</p>
                               <i class="fas fa-minus"onClick={ this.setTimeDownPomodoro.bind(this)}></i>
                               
                             </div>
