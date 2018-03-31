@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 var _ =require('lodash');
+const tiles=["One","Two","Three","Four"];
 
 class App extends Component {
 
@@ -16,7 +17,9 @@ class App extends Component {
       stage:0,
       totalStage:0,
       randomBox:[],
-      checkArray:[]
+      point:0,
+      simonBar:0,
+      progress:0
     }
 
   }
@@ -34,7 +37,6 @@ class App extends Component {
     }
     else{
       this.setState({stage: this.state.stage + 1 });
-      const tiles=["One","Two","Three","Four"];
       const random=_.random(0, 3);
       this.setState({ randomBox:[...this.state.randomBox,random] });
       this.randomBox( tiles[random]);
@@ -56,12 +58,67 @@ class App extends Component {
     this.clear();
   }
 
-  clear(){
-    this.setState({ stage: 0, totalStage :0});
+  clearRandom(){
+
+    this.setState({
+      point:0,
+      simonBar:0,
+      randomBox:[]
+      });
+
+    
   }
 
+  clear(){
+
+    this.setState({
+      stage: 0,
+      totalStage :0
+      });
+  }
+
+  progress(){
+
+    let randomBox=[...this.state.randomBox] ;
+    let point = this.state.point+1 ;
+
+    if( point === randomBox.length ){
+      this.setState({ progress : this.state.progress + 25 });
+      this.clearRandom();
+  }
+
+  }
+
+
+  simonBarClicker(){
+
+    if( this.state.randomBox.length !==0  ){
+      this.setState({ simonBar: this.state.simonBar +1  });
+    }
+    
+  }
+
+
+  
   checkSimon(event){
-    this.setState({ checkArray:[...this.state.checkArray,event.target.id] });
+
+    this.simonBarClicker();
+    let randomBox=[...this.state.randomBox] ;
+    let index =this.state.simonBar;
+
+        if( randomBox[index] === _.toNumber(event.target.id) ){     
+          this.setState({ point: this.state.point +  1 });
+          this.progress();
+        }
+        else{
+
+          this.setState({
+            point:0,
+      simonBar:0,
+            });
+          
+        }
+
   }
 
   
@@ -77,7 +134,8 @@ class App extends Component {
           <div class="card">
   <header class="card-header">
     <p class="card-header-title">
-      Score
+      Score : { this.state.point }
+      <progress class="progress" value={this.state.progress} max="100"> </progress>
     </p>
     <a  class="card-header-icon" aria-label="more options">
       
