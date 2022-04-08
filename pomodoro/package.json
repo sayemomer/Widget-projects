@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/react-fontawesome": "0.0.18",
-    "moment": "^2.21.0",
+    "moment": "^2.29.2",
     "node-stopwatch": "0.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
